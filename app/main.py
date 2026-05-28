@@ -12,7 +12,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Health Assistant",
-    description="Upload doctors' prescriptions, parse them with Gemini 3.1 Pro, and store "
+    description="Upload doctors' prescriptions, parse them with Gemini 3.5 Flash, and store "
     "the structured data for downstream reminders.",
     version="0.1.0",
 )

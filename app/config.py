@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     )
 
     GOOGLE_API_KEY: Optional[str] = None
-    GOOGLE_MODEL: str = "gemini-3.1-pro"
+    GOOGLE_MODEL: str = "gemini-3.5-flash"
 
     # If unset, boto3 falls back to its default credential chain
     # (~/.aws/credentials, instance profile, etc.).
