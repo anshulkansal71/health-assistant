@@ -37,6 +37,14 @@ class DiagnosticTestRead(BaseModel):
     instructions: Optional[str] = None
 
 
+class PrescriptionImageRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: UUID
+    original_filename: Optional[str] = None
+    content_type: Optional[str] = None
+
+
 class PrescriptionBase(BaseModel):
     patient_name: Optional[str] = None
     patient_age: Optional[str] = None
@@ -55,13 +63,19 @@ class PrescriptionRead(PrescriptionBase):
     model_config = ConfigDict(from_attributes=True)
 
     id: UUID
-    original_filename: Optional[str] = None
     created_at: datetime
     updated_at: datetime
+    images: list[PrescriptionImageRead] = []
     medications: list[MedicationRead] = []
     diagnostic_tests: list[DiagnosticTestRead] = []
 
 
 class PresignedImageUrl(BaseModel):
+    image_id: UUID
     url: str
     expires_in_seconds: int
+
+
+class PresignedImageUrls(BaseModel):
+    expires_in_seconds: int
+    images: list[PresignedImageUrl]

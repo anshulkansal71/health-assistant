@@ -26,10 +26,6 @@ class Prescription(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
-    s3_key = Column(String, nullable=False)
-    original_filename = Column(String)
-    content_type = Column(String)
-
     patient_name = Column(String, index=True)
     patient_age = Column(String)
 
@@ -48,6 +44,12 @@ class Prescription(Base):
         DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
+    images = relationship(
+        "PrescriptionImage",
+        back_populates="prescription",
+        cascade="all, delete-orphan",
+        order_by="PrescriptionImage.created_at",
+    )
     medications = relationship(
         "Medication",
         back_populates="prescription",
@@ -58,6 +60,25 @@ class Prescription(Base):
         back_populates="prescription",
         cascade="all, delete-orphan",
     )
+
+
+class PrescriptionImage(Base):
+    __tablename__ = "prescription_images"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    prescription_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey("prescriptions.id", ondelete="CASCADE"),
+        nullable=False,
+    )
+
+    s3_key = Column(String, nullable=False)
+    original_filename = Column(String)
+    content_type = Column(String)
+
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    prescription = relationship("Prescription", back_populates="images")
 
 
 class Medication(Base):

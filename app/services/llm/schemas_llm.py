@@ -1,7 +1,7 @@
 """Pydantic schemas that define the structured output we ask the LLM for.
 
-These are passed straight to `client.beta.chat.completions.parse(response_format=...)`,
-so the OpenAI SDK enforces the shape and hands us back validated objects.
+These are used with LangChain's `with_structured_output()` to ensure the
+Gemini response validates against the expected schema.
 """
 
 from datetime import date, time

@@ -5,7 +5,8 @@ uv python pin 3.11.8
 uv venv
 source .venv/bin/activate
 
-
+<!-- Create db command for first run -->
+createdb health_assistant
 
 <!-- How to set it up -->
 uv pip install -r requirements.txt
